@@ -58,15 +58,15 @@ impl SignatureGenerator {
         let converted_file = rodio::source::UniformSourceIterator::new(decoder?, 1, 16000);
         
         let raw_pcm_samples: Vec<i16> = converted_file.collect();
-        let mut raw_pcm_samples_slice: &[i16] = &raw_pcm_samples;
+        let raw_pcm_samples_slice: &[i16] = &raw_pcm_samples;
         
-        let slice_len = raw_pcm_samples_slice.len().min(12 * 16000);
+        let slice_len = raw_pcm_samples_slice.len(); //.min(12 * 16000);
         
-        if raw_pcm_samples_slice.len() > 12 * 16000 {
-            let middle = raw_pcm_samples.len() / 2;
+        //if raw_pcm_samples_slice.len() > 12 * 16000 {
+        //    let middle = raw_pcm_samples.len() / 2;
             
-            raw_pcm_samples_slice = &raw_pcm_samples_slice[middle - (6 * 16000) .. middle + (6 * 16000)];
-        }
+        //    raw_pcm_samples_slice = &raw_pcm_samples_slice[middle - (6 * 16000) .. middle + (6 * 16000)];
+        //}
 
         Ok(SignatureGenerator::make_signature_from_buffer(&raw_pcm_samples_slice[..slice_len]))
 
